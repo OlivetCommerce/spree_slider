@@ -1,8 +1,10 @@
-source 'http://rubygems.org'
-
 source 'https://rubygems.org'
 
-spree_version = 'master'
-gem 'spree', github: 'spree/spree', branch: spree_version
+spree_version = '~> 4.0'
+gem 'spree', spree_version
+
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
+gem 'rubocop-rspec', require: false
 
 gemspec

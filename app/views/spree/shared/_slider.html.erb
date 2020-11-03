@@ -1,41 +1,135 @@
 <% if slider.size > 0 %>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <div class="mb-0 position-relative">
+    <div class="home-slideshow">
+      <div class="variable-width" data-slick='{
+      dots: true,
+      slidesToScroll: 1,
+      autoplay:true,
+      fade: false,
+      autoplaySpeed:4000
+	  }'>
 
-  <%# generate a random number for the carousel id - in case you want multiple per page %>
-  <% cid ||= Random.rand(1000) %>
+        <% slider.each_with_index do |slide, index| %>
+          <div class="slick-list">
+            <% image_url = slide.slide_image ?  main_app.url_for(slide.slide_image) : "noimage/large"%>
+            <%= link_to image_tag(image_url,class: "slide-img", alt: slide.slide_name), url_for(slide.slide_link) %>
 
-  <div id="carousel-slider-<%= cid %>" class="carousel slide" data-ride="carousel" <%= (defined? interval) != nil ? "data-interval=#{interval.to_s}" : "" %>>
-    <%# Indicators %>
-    <ol class="carousel-indicators">
-      <% slider.each_with_index do |slide, index| %>
-        <li data-target="#carousel-prod-<%= cid %>" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
-      <% end %>
-    </ol>
-
-    <%# Wrapper for slider %>
-    <div class="carousel-inner">
-      <% slider.each_with_index do |slide, index| %>
-        <div class="item <%= index == 0 ? 'active' : '' %>">
-          <%= link_to image_tag(slide.slide_image.url, alt: slide.slide_name), url_for(slide.slide_link) %>
-          <div class="carousel-caption">
-            <h3><%= slide.slide_name %></h3>
-            <% unless slide.body.blank? %>
-              <p><%= slide.body %><p>
-            <% end %>
+            <div class="carousel-caption">
+              <h3><%= slide.slide_name %></h3>
+              <% unless slide.body.blank? %>
+                <p><%= slide.body %>
+                <p>
+              <% end %>
+            </div>
           </div>
-        </div>
-      <% end %>
+
+        <% end %>
+      </div>
     </div>
 
-    <%# Controls %>
-    <a class="left carousel-control" href="#carousel-slider-<%= cid %>" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only"><%= t(:previous) %></span>
-    </a>
-    <a class="right carousel-control" href="#carousel-slider-<%= cid %>" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only"><%= t(:next) %></span>
-    </a>
 
+    <style>
+      /* slideshow-homepage-------------------------------------------------------------------- */
+      .home-slideshow {
+        position: relative;
+      }
+
+      .home-slideshow .slider-content {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        width: auto;
+        margin: auto;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        max-width: 80%;
+        visibility: hidden;
+        opacity: 0;
+        padding: 10px;
+
+      }
+
+      .home-slideshow .slick-active .slider-content {
+        z-index: 9999;
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .home-slideshow .slick-slide img:hover {
+        opacity: 1;
+      }
+
+      .home-slideshow .slick-slider .slick-arrow {
+        position: absolute;
+        top: 50%;
+        z-index: 50;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        outline: none;
+      }
+
+      .home-slideshow .slick-dots {
+        display: none !important
+      }
+
+      .slick-arrow {
+        height: 60px;
+        line-height: 60px;
+      }
+
+      .home-slideshow .slick-next {
+        right: 5%;
+      }
+
+      .home-slideshow .slick-prev {
+        left: 5%;
+      }
+
+      .home-slideshow .slick-arrow {
+        font-size: 0px;
+        background: none;
+        border: none;
+      }
+
+      .home-slideshow .slick-next:before {
+        content: "\f105";
+      }
+
+      .home-slideshow .slick-arrow:before {
+        font-family: FontAwesome;
+        color: #fff;
+      }
+
+      .home-slideshow .slick-prev:before {
+        content: "\f104";
+      }
+
+      .home-slideshow .slick-arrow:before {
+        font-family: FontAwesome;
+        font-size: 60px;
+      }
+
+      .slick-slide img {
+        margin: auto;
+        max-width: 100%;
+      }
+
+      .slick-arrow:before, .slick-arrow:before {
+        opacity: 0;
+      }
+
+      .home-slideshow:hover .slick-arrow:before, .home-slideshow:hover .slick-arrow:before {
+        opacity: 1;
+      }
+
+      .home-slideshow .slick-arrow:before {
+        color: #959da5;
+      }
+    </style>
   </div>
-
 <% end %>
