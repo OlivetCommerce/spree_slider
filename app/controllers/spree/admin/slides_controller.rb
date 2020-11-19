@@ -4,7 +4,7 @@ module Spree
       respond_to :html
 
       def index
-        @slides = Spree::Slide.order(:position)
+        @slides = Spree::Slide.includes(:slide_locations).order('spree_slide_locations.id ASC').order('position ASC')
       end
 
       private

@@ -25,6 +25,7 @@
           <th><%= Spree.t(:product) %></th>
         <% end %>
         <th><%= Spree.t(:location) %></th>
+        <th><%= Spree.t(:position) %></th>
         <th><%= Spree.t(:published) %></th>
         <th data-hook="admin_slides_index_header_actions" class="actions"></th>
       </tr>
@@ -40,6 +41,7 @@
             <td><%= slide.product ? link_to(slide.product.name, object_url(slide)) : '---' %></td>
           <% end %>
           <td><%= slide.slide_locations.map(&:name).join(", ") %></td>
+          <td><%= slide.position %></td>
           <td><%= slide.published ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td data-hook="admin_slides_index_row_actions" class="actions text-right">
             <%= link_to_edit slide, no_text: true, class: 'edit' %>
