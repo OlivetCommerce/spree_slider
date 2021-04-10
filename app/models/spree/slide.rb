@@ -1,4 +1,6 @@
 class Spree::Slide < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+
   has_and_belongs_to_many :slide_locations,
                           class_name: 'Spree::SlideLocation',
                           join_table: 'spree_slide_slide_locations'
@@ -35,6 +37,10 @@ class Spree::Slide < ActiveRecord::Base
 
   def slide_image
     !image.attached? && product.present? && product.images.any? ? product.images.first.attachment : image.attachment
+  end
+
+  def slide_image_url
+    !image.attached? && product.present? && product.images.any? ? rails_blob_url(product.images.first, only_path: true) : rails_blob_url(image, only_path: true)
   end
 
   # Helper for resizing
