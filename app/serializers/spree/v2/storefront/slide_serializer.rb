@@ -6,6 +6,10 @@ module Spree
 
         attributes :slide_name, :body, :slide_link, :slide_image_url, :published, :position
 
+        attribute :locations do |slide|
+          slide.slide_locations
+        end
+
         has_one :product
         has_many :slide_locations
       end

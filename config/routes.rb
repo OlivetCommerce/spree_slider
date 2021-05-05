@@ -13,6 +13,7 @@ Spree::Core::Engine.routes.draw do
     namespace :v2 do
       namespace :storefront do
         resources :slides, only: [:index, :show]
+        resources :slide_locations, only: [:index, :show]
       end
     end
   end

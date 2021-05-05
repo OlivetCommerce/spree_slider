@@ -18,7 +18,7 @@
   <div class="col-md-12">
     <%= f.field_container :product_id do %>
       <%= label_tag :product_id, t(:product) %><br>
-      <%= hidden_field_tag 'slide[product_id]', f.object.product_id.to_s, class: "product_picker fullwidth" %>
+      <%= f.select :product_id, options_from_collection_for_select(@slide.product ? [@slide.product] : [], :id, :name, @slide.product_id), { include_hidden: true }, multiple: false, class: "product_picker fullwidth" %>
     <% end %>
   </div>
 
