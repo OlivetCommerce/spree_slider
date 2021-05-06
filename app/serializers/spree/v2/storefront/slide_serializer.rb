@@ -4,7 +4,7 @@ module Spree
       class SlideSerializer < BaseSerializer
         set_type :slide
 
-        attributes :slide_name, :body, :slide_link, :slide_image_url, :published, :position
+        attributes :slide_name, :body, :slide_link, :slide_image_url, :published, :position, :product_id
 
         attribute :locations do |slide|
           slide.slide_locations

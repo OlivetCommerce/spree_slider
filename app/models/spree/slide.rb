@@ -40,7 +40,7 @@ class Spree::Slide < ActiveRecord::Base
   end
 
   def slide_image_url
-    !image.attached? && product.present? && product.images.any? ? rails_blob_url(product.images.first, only_path: true) : rails_blob_url(image, only_path: true)
+    !image.attached? && product.present? && product.images.any? ? rails_blob_url(product.images.first.attachment, only_path: true) : rails_blob_url(image.attachment, only_path: true)
   end
 
   # Helper for resizing
