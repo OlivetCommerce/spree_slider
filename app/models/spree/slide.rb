@@ -40,7 +40,13 @@ class Spree::Slide < ActiveRecord::Base
   end
 
   def slide_image_url
-    !image.attached? && product.present? && product.images.any? ? rails_blob_url(product.images.first.attachment, only_path: true) : rails_blob_url(image.attachment, only_path: true)
+    if !image.attached? && product.present? && product.images.any? 
+      blob = product.images.first.attachment
+      ActiveStorage::Blob.service.exist?(blob.key) ? File.join(ENV['ASSETS_URL'], blob.key) : File.join(ENV['SPREE_API_URL'], polymorphic_path(blob, only_path: true))
+    else
+      blob = image.attachment
+      ActiveStorage::Blob.service.exist?(blob.key) ? File.join(ENV['ASSETS_URL'], blob.key) : File.join(ENV['SPREE_API_URL'], polymorphic_path(blob, only_path: true))
+    end
   end
 
   # Helper for resizing
