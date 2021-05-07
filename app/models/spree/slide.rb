@@ -42,10 +42,10 @@ class Spree::Slide < ActiveRecord::Base
   def slide_image_url
     if !image.attached? && product.present? && product.images.any? 
       blob = product.images.first.attachment
-      ActiveStorage::Blob.service.exist?(blob.key) ? File.join(ENV['ASSETS_URL'], blob.key) : File.join(ENV['SPREE_API_URL'], polymorphic_path(blob, only_path: true))
+      ActiveStorage::Blob.service.exist?(blob.key) ? File.join(ENV['ASSETS_URL'], blob.key) : rails_blob_url(blob, only_path: true)
     else
       blob = image.attachment
-      ActiveStorage::Blob.service.exist?(blob.key) ? File.join(ENV['ASSETS_URL'], blob.key) : File.join(ENV['SPREE_API_URL'], polymorphic_path(blob, only_path: true))
+      ActiveStorage::Blob.service.exist?(blob.key) ? File.join(ENV['ASSETS_URL'], blob.key) : rails_blob_url(blob, only_path: true)
     end
   end
 
